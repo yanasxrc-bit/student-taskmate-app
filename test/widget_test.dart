@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:student_taskmate_app/main.dart';
+import 'package:student_taskmate_app/models/task_item.dart';
 
 void main() {
+  test('task items compare by value and support copyWith', () {
+    final dueDate = DateTime(2026, 1, 10, 9, 30);
+    final taskA = TaskItem(
+      title: 'Essay draft',
+      subject: 'Literature',
+      dueDate: dueDate,
+      isCompleted: false,
+    );
+    final taskB = TaskItem(
+      title: 'Essay draft',
+      subject: 'Literature',
+      dueDate: dueDate,
+      isCompleted: false,
+    );
+
+    expect(taskA, equals(taskB));
+    expect(taskA.hashCode, equals(taskB.hashCode));
+    expect([taskA].contains(taskB), isTrue);
+    expect(taskA.copyWith(isCompleted: true).isCompleted, isTrue);
+  });
+
   testWidgets('home dashboard shows summaries and the navigation bar', (
     tester,
   ) async {

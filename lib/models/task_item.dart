@@ -10,6 +10,38 @@ class TaskItem {
   final String subject;
   final DateTime dueDate;
   final bool isCompleted;
+
+  TaskItem copyWith({
+    String? title,
+    String? subject,
+    DateTime? dueDate,
+    bool? isCompleted,
+  }) {
+    return TaskItem(
+      title: title ?? this.title,
+      subject: subject ?? this.subject,
+      dueDate: dueDate ?? this.dueDate,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is TaskItem &&
+        other.title == title &&
+        other.subject == subject &&
+        other.dueDate.isAtSameMomentAs(dueDate) &&
+        other.isCompleted == isCompleted;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    title,
+    subject,
+    dueDate.millisecondsSinceEpoch,
+    isCompleted,
+  );
 }
 
 String formatTaskDate(DateTime date) {
